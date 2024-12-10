@@ -1,12 +1,7 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Sync to Hugging Face Hub
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [main]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -15,34 +10,16 @@ jobs:
     sync-to-hub:
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Add remote
-        env: 
-          HG_FACE: ${{ secrets.HG_FACE }}
-        run: git remote add space https://eveval97:$HG_FACE@huggingface.co/spaces/eveval97/text_summarization
-      - name: Push to hub
-        env: 
-          HG_FACE: ${{ secrets.HG_FACE }}
-        run: git push --force https://eveval97:$HG_FACE@huggingface.co/spaces/eveval97/text_summarization main
+        - uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+        - name: Add remote
+          env: 
+            HG_FACE: ${{ secrets.HG_FACE }}
+          run: git remote add space https://eveval97:$HG_FACE@huggingface.co/spaces/eveval97/text_summarization
+        - name: Push to hub
+          env: 
+            HG_FACE: ${{ secrets.HG_FACE }}
+          run: git push --force https://eveval97:$HG_FACE@huggingface.co/spaces/eveval97/text_summarization main
         
   # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
